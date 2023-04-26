@@ -1,0 +1,20 @@
+.button {
+  border: none;
+  border-radius: 10px;
+  background: unset;
+  background: linear-gradient(45deg, lightblue, gray);
+  width: 150px;
+  height: 50px;
+  font-size: 18px;
+  font-family: "Times New Roman", Times, serif;
+  font-weight: bold;
+  color: aliceblue;
+  box-shadow: 0 0 8px rgb(133, 179, 224);
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+    transition: ease-in-out 0.3s;
+    text-shadow: 0 0 15px rgb(241, 241, 199);
+    box-shadow: 0 0 20px rgb(241, 241, 187);
+  }
+}

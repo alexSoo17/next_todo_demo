@@ -1,0 +1,38 @@
+.card {
+  width: 300px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding-left: 10px;
+  background-color: #f3eeee;
+  border-radius: 20px;
+  box-shadow: 0 0 10px #ccc;
+  &:hover {
+    box-shadow: 0 0 20px #a7a5a5;
+    cursor: pointer;
+    transform: scale(1.05);
+    transition: ease-in-out, 0.5s;
+  }
+  p {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 20px;
+    color: #6d6b6b;
+    padding: 0 10px;
+    span {
+      font-size: 16px;
+      color: rgb(38, 65, 215);
+    }
+  }
+}
+
+.progress {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.flexBox {
+  display: flex;
+  align-items: center;
+}

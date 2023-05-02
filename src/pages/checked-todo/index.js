@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import TodoItem from "@/components/todoItem";
 import styles from "../todo-list/style.module.scss";
 import { getAllTodos } from "@/utils/fetchApi/todo";
-import { CircularProgress } from "@mui/material";
+import LoadingBox from "@/components/loadingBox";
 function CheckedTodo() {
   const [todos, setTodos] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -26,13 +26,7 @@ function CheckedTodo() {
     <div className={styles.container}>
       <h1> Checked Todos</h1>
       {isLoading ? (
-        <div className={styles.loadingBox}>
-          loading...
-          <CircularProgress
-            color="inherit"
-            style={{ width: "60px", height: "60px" }}
-          />
-        </div>
+        <LoadingBox />
       ) : (
         <div className={styles.cardContainer}>
           {todos.map((todo) => {

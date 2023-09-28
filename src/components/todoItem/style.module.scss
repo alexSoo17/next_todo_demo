@@ -1,15 +1,15 @@
 .card {
-  width: 300px;
-  height: 200px;
+  width: 350px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  padding-left: 10px;
+  gap: 10px;
+  padding: 10px 20px;
   background-color: #f3eeee;
   border-radius: 20px;
   box-shadow: 0 0 10px #ccc;
   &:hover {
-    box-shadow: 0 0 20px #a7a5a5;
+    box-shadow: 0 0 20px #e1dede;
     cursor: pointer;
     transform: scale(1.05);
     transition: ease-in-out, 0.5s;
@@ -17,11 +17,18 @@
   p {
     font-family: "Times New Roman", Times, serif;
     font-size: 20px;
-    color: #6d6b6b;
+    color: #5d5c5c;
     padding: 0 10px;
-    span {
+    .progress {
       font-size: 16px;
       color: rgb(38, 65, 215);
+    }
+    .title {
+      display: inline-block;
+      width: 100px;
+      font-weight: bold;
+      color: #000;
+      padding-right: 10px;
     }
   }
 }
@@ -34,5 +41,37 @@
 
 .flexBox {
   display: flex;
+  align-items: align-items;
+}
+
+.btnContainer {
+  display: flex;
   align-items: center;
+  justify-content: flex-end;
+  padding: 0 10px;
+  gap: 10px;
+  .btn {
+    color: #fff;
+    width: 60px;
+    height: 25px;
+    border: 2px solid #7e7c7c;
+    cursor: pointer;
+    &:hover {
+      cursor: pointer;
+      transform: scale(1.1);
+      transition: ease-in-out, 0.5s;
+    }
+  }
+  .update {
+    background-color: rgb(52, 143, 229);
+  }
+  .delete {
+    background-color: rgb(238, 80, 80);
+  }
+  .done {
+    background-color: #7e7c7c;
+    &:hover {
+      cursor: not-allowed;
+    }
+  }
 }

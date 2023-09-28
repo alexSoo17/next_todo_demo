@@ -5,79 +5,114 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { useRef, useState } from "react";
-import { addNewTodo } from "@/utils/fetchApi/todo";
+import { useState } from "react";
+import { addNewTodo, updateTodo } from "@/utils/fetchApi/todo";
+import { useRouter } from "next/navigation";
 
 export default function AddDialog(props) {
+  const { open, handleClose, prevFormData, setUpdated } = props;
   const [isLoading, setIsLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    name: prevFormData?.name || "",
+    category: prevFormData?.category || "",
+    deadline: prevFormData?.deadline || "",
+    progress: prevFormData?.progress || 0,
+    done: prevFormData?.done || false,
+  });
+  const router = useRouter();
 
   const handleSubmit = () => {
-    const postData = {
-      name: todoName.current.value,
-      category: todoCategory.current.value,
-      deadline: todoDeadline.current.value,
-      progress: "0%",
-      done: false,
-    };
     const sendData = async () => {
       try {
         setIsLoading(true);
-        await addNewTodo(postData);
+        prevFormData
+          ? (async () => {
+              await updateTodo(formData, prevFormData.id);
+              setUpdated((prev) => !prev);
+            })()
+          : await addNewTodo(formData);
       } catch (error) {
-        console.error("Error:", error);
+        throw new Error(error);
+      } finally {
+        setIsLoading(false);
+        !isLoading && handleClose();
+        router.push("/todo-list");
       }
     };
     sendData();
-    setIsLoading(false);
-
-    !isLoading && props.handleClose();
-    props.handleSuccessAlert();
   };
 
-  const todoName = useRef(null);
-  const todoCategory = useRef(null);
-  const todoDeadline = useRef(null);
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.id]: e.target.value,
+    });
+  };
   return (
-    <Dialog
-      open={props.open}
-      onClose={props.handleClose}
-      maxWidth="xs"
-      fullWidth={true}
-    >
+    <Dialog open={open} onClose={handleClose} maxWidth="xs" fullWidth={true}>
       <DialogTitle>Add new task</DialogTitle>
       <DialogContent>
         <DialogContentText>Set your new todo task now!</DialogContentText>
         <TextField
-          inputRef={todoName}
+          value={formData.name}
           autoFocus
           margin="dense"
           id="name"
           label="Todo name"
           fullWidth
           variant="standard"
+          onChange={handleChange}
         />
         <TextField
-          inputRef={todoCategory}
+          value={formData.category}
           autoFocus
           margin="dense"
           id="category"
           label="category"
           fullWidth
           variant="standard"
+          onChange={handleChange}
         />
         <TextField
-          inputRef={todoDeadline}
+          value={formData.deadline}
           autoFocus
           margin="dense"
           id="deadline"
           label="deadline"
           fullWidth
           variant="standard"
+          onChange={handleChange}
         />
+        {prevFormData && (
+          <TextField
+            value={formData.progress}
+            autoFocus
+            margin="dense"
+            id="progress"
+            label="progress"
+            fullWidth
+            variant="standard"
+            onChange={handleChange}
+          />
+        )}
+        {prevFormData && (
+          <TextField
+            value={formData.done}
+            autoFocus
+            margin="dense"
+            id="done"
+            label="done"
+            fullWidth
+            variant="standard"
+            onChange={handleChange}
+          />
+        )}
       </DialogContent>
       <DialogActions>
-        <Button onClick={props.handleClose}>Cancel</Button>
-        <Button onClick={handleSubmit}>Add</Button>
+        <Button onClick={handleClose}>Cancel</Button>
+        <Button onClick={handleSubmit}>
+          {prevFormData ? "Update" : "Add"}
+        </Button>
       </DialogActions>
     </Dialog>
   );

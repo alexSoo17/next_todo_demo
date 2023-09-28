@@ -5,7 +5,7 @@ import { getAllTodos } from "@/utils/fetchApi/todo";
 export default function CheckedTodo({ todoList }) {
   return (
     <div className={styles.container}>
-      <h1> Already Done!</h1>
+      <h1> {todoList.length ? "Already Done!" : "Seems nothing done yet"}</h1>
       <div className={styles.cardContainer}>
         {todoList.map((todo) => {
           return <TodoItem key={todo.id} todo={todo} />;
@@ -19,7 +19,7 @@ export async function getServerSideProps() {
   const res = await getAllTodos();
   const todoList = [];
   for (let key in res) {
-    if (res[key].done === true) {
+    if (res[key].done === "true") {
       todoList.push({ id: key, ...res[key] });
     }
   }
